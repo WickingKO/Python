@@ -1,0 +1,19 @@
+pip install aiogram
+
+from aiogram import Bot, types
+from aiogram.dispatcher import Dispatcher
+from aiogram.utils import executor
+
+bot = Bot('5428605213:AAF2Ni4LpDS0Sp2vSwh49mg0_WvYxjIrJv0')
+dp = Dispatcher(bot)
+
+
+@dp.message_handler(commands=['start'])
+async def start_command(message : types.Message):
+    await message.answer('Ты активировал команды старт!!!')
+
+@dp.message_handler(commands=['info'])
+async def start_command(message : types.Message):
+    await message.answer('А какую ты информацию заходел ?!?!')
+
+executor.start_polling(dp, skip_updates=True)
