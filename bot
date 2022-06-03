@@ -3,17 +3,29 @@ pip install aiogram
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
-
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+ 
 bot = Bot('5428605213:AAF2Ni4LpDS0Sp2vSwh49mg0_WvYxjIrJv0')
 dp = Dispatcher(bot)
 
-
+button1 = KeyboardButton('Привет')
+button2 = KeyboardButton('Эгэгэй!')
+keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+keyboard.add(button1).add(button2)
+ 
 @dp.message_handler(commands=['start'])
 async def start_command(message : types.Message):
-    await message.answer('Ты активировал команды старт!!!')
-
+    await message.answer('Работает функция старт!', reply_markup=keyboard)
+ 
 @dp.message_handler(commands=['info'])
-async def start_command(message : types.Message):
-    await message.answer('А какую ты информацию заходел ?!?!')
-
+async def info_command(message : types.Message):
+    await message.answer('Тут будет какая-то информация!')
+ 
+@dp.message_handler()
+async def message_command(message : types.Message):
+    if message.text.lower() == 'привет':
+        await message.reply('И тебе привет, дружище!')
+    else:
+        await message.answer('Я тебя не понимаю. Напиши команду /start')
+ 
 executor.start_polling(dp, skip_updates=True)
